@@ -1,5 +1,5 @@
 
-import time, subprocess
+import time, subprocess, os
 
 
 
@@ -8,10 +8,9 @@ def main():
 	numpass = 0
 	numfail = 0
 	numremain = len(ANSWERS)
-	
 	for (prob, expectans) in sorted(ANSWERS.items()):
 		starttime = time.time()
-		actualans = subprocess.check_output(f"./p{prob:03}").strip().decode('utf-8') # Must return a string
+		actualans = subprocess.check_output(f"./cpp/tests/p{prob:03}", shell=True).strip().decode('utf-8') # Must return a string
 		elapsedtime = time.time() - starttime
 		totaltime += elapsedtime
 
@@ -25,7 +24,6 @@ def main():
 		
 		print(f"\r{' '*70}\r", end="")
 		print(f"Problem {prob:03}: {int(round(elapsedtime * 1000)):7} ms{failstr}")
-		print(f"Elapsed = {int(totaltime)} s, Passed = {numpass}, Failed = {numfail}, Remaining = {numremain}", end="\n", flush=True)
 
 
 ANSWERS = {
